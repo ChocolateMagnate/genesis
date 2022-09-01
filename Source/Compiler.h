@@ -1,7 +1,8 @@
 /* MIT License (C) Genesis Contributors
- * This file contains the source code for the process of compilation
+ * This file contains the source code for the process of compilation of the
  * Genesis programming language broken down into the following components:
- * tokenisation, parsing, semantic analysis. */
+ * tokenisation, parsing, semantic analysis. For the language-specific 
+ * feature parsing, take a look at the Source/Genesis.h*/
 #include <iostream>
 #include <fstream>
 #include <string>
@@ -9,11 +10,10 @@
 #include <list>
 #include <map>
 
-
+/// @brief The basic type that represents the token as its value and type.
 struct Lexeme {
-    //This is the struct that represents encapsulated tokens:
-    string lexeme; //the text,
-    char type[5];  //the type of lexeme: identifier, number, string, an operator, keyword, etc.
+    string lexeme;
+    char type[5];  //The type of lexeme: identifier, number, string, an operator, keyword, etc.
 };
 
 
@@ -42,7 +42,7 @@ class Block {
 };
 
 /// @brief Generates the standard tokens used in the language.
-/// @return the list of standard tokens.
+/// @return The map of standard tokens to their codes.
 auto generateTokens() {
     //This function tokenises the source code 
     //into a list of predefined lexemes.
@@ -85,14 +85,16 @@ auto generateTokens() {
     return tokens;
 }
 
+
 list<string> splitIntoComponents(string input) {
     //Splits the input string into the components
     //that can be parsed as individual tokens.
     const auto tokens = generateTokens();
     Block primary = Block(NULL, NULL);
     //Step 1. Cleanse the comments.
-    auto comments = input.find("//");
-    if (comments == NULL) comments = input.find("/*");
+    //Step 2. Split the input into the meaningful parts.
+    //Step 3. Tokenise the parts.
+    //Step 4. Generate the pattern tree.
 
 }
 
