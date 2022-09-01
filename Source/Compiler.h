@@ -48,36 +48,39 @@ map<string, string> generateTokens(char source[]) {
     //This function tokenises the source code into a list of lexemes.
     map<string, string> tokens;
     //Algebraic Operators:
-    tokens["Add"] = "+";
+    tokens["Add"]      = "+";
     tokens["Subtract"] = "-";
     tokens["Multiply"] = "*";
-    tokens["Divide"] = "/";
-    tokens["Assign"] = "=";
-    tokens["Modulo"] = "%";
+    tokens["Divide"]   = "/";
+    tokens["Assign"]   = "=";
+    tokens["Modulo"]   = "%";
     //Boolean Operators:
-    tokens["Equals"] = "==";
+    tokens["Equals"]     = "==";
     tokens["Not equals"] = "!=";
-    tokens["Less"] = "<";
-    tokens["Not more"] = "<=";
-    tokens["More"] = ">";
-    tokens["Not less"] = ">=";
+    tokens["Less"]       = "<";
+    tokens["Not more"]   = "<=";
+    tokens["More"]       = ">";
+    tokens["Not less"]   = ">=";
     //Equation Operators:
-    tokens["Add to"] = "+=";
+    tokens["Add to"]        = "+=";
     tokens["Subtract from"] = "-=";
-    tokens["Multiply by"] = "*=";
-    tokens["Divide by"] = "/=";
-    tokens["Modulo by"] = "%=";
+    tokens["Multiply by"]   = "*=";
+    tokens["Divide by"]     = "/=";
+    tokens["Modulo by"]     = "%=";
+    tokens["Strict assign"] = ":=";
     //Special symbols:
-    tokens["Opening "] = "(";
-    tokens[")"] = ")";
-    tokens["{"] = "{";
-    tokens["}"] = "}";
-    tokens[";"] = ";";
-    tokens["."] = ".";
-    tokens[","] = ",";
-    tokens["\""] = "\"";
+    tokens["Round opening"]  = "(";
+    tokens["Round closing"]  = ")";
+    tokens["Curly opening"]  = "{";
+    tokens["Curly closing"]  = "}";
+    tokens["Square opening"] = "[";
+    tokens["Square closing"] = "]";
+    tokens["Colon"]          = ":";
+    tokens["Semocolon"]      = ";";
+    tokens["Dot"]            = ".";
+    tokens["Comma"]          = ",";
+    tokens["Backslash"]      = "\\";
 
-    
     return tokens;
 }
 
