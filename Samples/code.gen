@@ -1,0 +1,4 @@
+private countSessionMembers(id: SessionId) -> int:
+    """Counts the total amount of users engaging within the meeting."""
+    //...
+    return count
