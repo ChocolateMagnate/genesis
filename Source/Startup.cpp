@@ -1,8 +1,8 @@
 /* MIT License (C) Genesis Contributors
  * This file is the central roadmap for the whole compiler that 
  * binds all components together. For more detailed description 
- * take a look at Source/Compiler.h for the compiler implementation
- * and Source/Genesis.h for the inner language's features parsing.*/
+ * take a look at Source/Compiler.h. For the compiler implementation,
+ * see Source/Genesis.h for the inner language's features parsing.*/
 #include <iostream>
 #include <fstream>
 #include <string>
