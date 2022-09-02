@@ -14,10 +14,9 @@ int main(){
     string statement;
     ifstream source("Samples/code.gen");
     if (source.is_open()){
-        cout << "File opened successfully" << endl;
-        while (getline(source, statement)){
-            cout << statement << endl;
-        }
+        getline(source, statement);
+        cout << "Source code: " << statement << endl;
+        cout << "Formatted code: " << endl << cleanseComments(statement) << endl;
         source.close();
     }
     return 0;

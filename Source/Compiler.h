@@ -12,7 +12,7 @@
 
 /// @brief The basic type that represents the token as its value and type.
 struct Lexeme {
-    string lexeme;
+    std::string lexeme;
     char type[5];  //The type of lexeme: identifier, number, string, an operator, keyword, etc.
 };
 
@@ -21,7 +21,7 @@ struct Lexeme {
 class Block {
     public:
         Block *parent;
-        list<Block*> children;
+        std::list<Block*> children;
         Lexeme *lexeme;
         Block(Block *parent, Lexeme *lexeme) {
             this->parent = parent;
@@ -32,9 +32,9 @@ class Block {
         }
         void Show(int depth) {
             for (int i = 0; i < depth; i++) {
-                cout << "  ";
+                std::cout << "  ";
             }
-            cout << lexeme->lexeme << endl;
+            std::cout << lexeme->lexeme << std::endl;
             for (Block *child : children) {
                 child->Show(depth + 1);
             }
@@ -46,7 +46,7 @@ class Block {
 auto generateTokens() {
     //This function tokenises the source code 
     //into a list of predefined lexemes.
-    map<string, string> operators;
+    std::map<std::string, std::string> operators;
     //Algebraic Operators:
     operators["+"]  = "Add";
     operators["-"]  = "Subtract";
@@ -88,7 +88,7 @@ auto generateTokens() {
 /// @brief (0/4) Generates the list of the keywords used in Genesis.
 /// @return The array of the keywords.
 auto generateKeywords(){
-    const string keywords[] = {"if", "else", "as", "for", "while", "break", "return",
+    const std::string keywords[] = {"if", "else", "as", "for", "while", "break", "return",
                 "class", "do", "private", "protected", "public", "static",  "delete", 
                 "import", "this", "and", "or", "not", "true", "false", "void", "with",
                 "extends", "interface", "export", "readonly", "go", "in", "out"};
@@ -97,35 +97,47 @@ auto generateKeywords(){
 
 /// @brief (1/4) Removes the the characters to be ignored (comments) from the source code.
 /// @return The formatted string with only meaningful content.
-list<string> cleanseComments(string source) {
-
+std::string cleanseComments(std::string source) {
+    int indexOfComments = source.find("//");
+    if (indexOfComments != std::string::npos) {
+        source = source.substr(0, indexOfComments);
+    } else {
+        indexOfComments = source.find("/*");
+        if (indexOfComments != std::string::npos) {
+            int indexOfCommentsEnd = source.find("*/");
+            if (indexOfCommentsEnd != std::string::npos) {
+                source = source.substr(0, indexOfComments) + source.substr(indexOfCommentsEnd + 2);
+            } 
+        }
+    }
+    return source;
 }
 
 
 /// @brief (2/4) Divides the source code into the sequence of sliced lexemes ready to be parsed.
 /// @return The list of individual lexemes.
-list<string> splitIntoComponents(string input) {
+std::list<std::string> splitIntoComponents(std::string source) {
     //Splits the input string into the components
     //that can be parsed as individual operators.
-    const map<string, string> operators = generateTokens();
-    const string *keywords = generateKeywords();
+    const std::map<std::string, std::string> operators = generateTokens();
+    const std::string *keywords = generateKeywords();
     //Step 1. Cleanse the comments.
 
 }
 
 /// @brief (3/4) Parses the tokens into specified lexemes by mathing operators, keywords and identifiers.
 /// @return The sequence of configured lexemes.
-list<Lexeme> tokenise(string source) {
+std::list<Lexeme> tokenise(std::string source) {
     //This function tokenises the source code into a list of lexemes.
-    list<Lexeme> lexemes; //Below is only the reference to the primary operators.
-    const map<string, string> operators = generateTokens();
-    const string *keywords = generateKeywords();
+    std::list<Lexeme> lexemes; //Below is only the reference to the primary operators.
+    const std::map<std::string, std::string> operators = generateTokens();
+    const std::string *keywords = generateKeywords();
     return lexemes;
 }
 
 /// @brief (4/4) Parses the lexemes into the hierarchical tree model of the operators.
 /// @return The statement pattern as an integer.
-int parseIntoPattern(list<Lexeme> lexemes) {
+auto parseIntoPattern(std::list<Lexeme> lexemes) {
     int pattern{}; //The initial pattern of the code.
 
     return pattern;
