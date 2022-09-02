@@ -1,0 +1,4 @@
+Dear contributors,  
+We are glad to see your interest in contributing to the Genesis Project and help us advance the AI capabilities. We believe the new language can open new possibilities that the analogues would not even imagine to be possible.  
+
+When you create a programming language, you naturally want to make it the best possible tool for its purpose, and it's only the matter of time when you begin to look at other languages as implementations of certain ideas that you evaluate. Should our language prefer strict arrays or implement lists natively? Does dynamic typisation offer any advantages over static? What should be the naming conventions commonly used in it? You begin to ask a mountain-worth questions and enter the state of always answering them. 

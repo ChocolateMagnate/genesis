@@ -88,7 +88,7 @@ auto generateTokens() {
 /// @brief (0/4) Generates the list of the keywords used in Genesis.
 /// @return The array of the keywords.
 auto generateKeywords(){
-    const std::string keywords[] = {"if", "else", "as", "for", "while", "break", "return",
+    std::string keywords[] = {"if", "else", "as", "for", "while", "break", "return",
                 "class", "do", "private", "protected", "public", "static",  "delete", 
                 "import", "this", "and", "or", "not", "true", "false", "void", "with",
                 "extends", "interface", "export", "readonly", "go", "in", "out"};
@@ -120,10 +120,10 @@ std::list<std::string> splitIntoComponents(std::string source) {
     //Splits the input string into the components
     //that can be parsed as individual operators.
     const std::map<std::string, std::string> operators = generateTokens();
-    const std::string *keywords = generateKeywords();
-    //Step 1. Cleanse the comments.
+    std::string *keywords = generateKeywords();
+    
 
-}
+};
 
 /// @brief (3/4) Parses the tokens into specified lexemes by mathing operators, keywords and identifiers.
 /// @return The sequence of configured lexemes.
@@ -131,7 +131,7 @@ std::list<Lexeme> tokenise(std::string source) {
     //This function tokenises the source code into a list of lexemes.
     std::list<Lexeme> lexemes; //Below is only the reference to the primary operators.
     const std::map<std::string, std::string> operators = generateTokens();
-    const std::string *keywords = generateKeywords();
+    std::string *keywords = generateKeywords();
     return lexemes;
 }
 

@@ -6,8 +6,8 @@
 #include <iostream>
 #include <fstream>
 #include <string>
-#include <Compiler.h>
-#include <Genesis.h>
+#include "Compiler.h"
+#include "Genesis.h"
 using namespace std;
 
 int main(){
