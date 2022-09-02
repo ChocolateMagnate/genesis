@@ -17,7 +17,7 @@ struct Lexeme {
 };
 
 
-/// @brief The hierarchical tree model of the tokens. 
+/// @brief The hierarchical tree model of the operators. 
 class Block {
     public:
         Block *parent;
@@ -41,68 +41,92 @@ class Block {
         }
 };
 
-/// @brief Generates the standard tokens used in the language.
-/// @return The map of standard tokens to their codes.
+/// @brief Generates the standard lexemes used in the language.
+/// @return The map of standard operators to their codes with the array of the keywords.
 auto generateTokens() {
     //This function tokenises the source code 
     //into a list of predefined lexemes.
-    map<string, string> tokens;
+    map<string, string> operators;
     //Algebraic Operators:
-    tokens["+"]  = "Add";
-    tokens["-"]  = "Subtract";
-    tokens["*"]  = "Multiply";
-    tokens["/"]  = "Divide";
-    tokens["="]  = "Assign";
-    tokens["%"]  = "Modulo";
-    tokens["^"]  = "Power";
-    tokens["\\"] = "Root";
+    operators["+"]  = "Add";
+    operators["-"]  = "Subtract";
+    operators["*"]  = "Multiply";
+    operators["/"]  = "Divide";
+    operators["="]  = "Assign";
+    operators["%"]  = "Modulo";
+    operators["^"]  = "Power";
+    operators["\\"] = "Root";
     //Boolean Operators:
-    tokens["=="] = "Equals";
-    tokens["!="] = "NotEquals";
-    tokens["<"]  = "Less";
-    tokens["<="] = "Not more";
-    tokens[">"]  = "More";
-    tokens[">="] = "Not less";
+    operators["=="] = "Equals";
+    operators["!" ] = "Not";
+    operators["!="] = "Not equals";
+    operators["<"]  = "Less";
+    operators["<="] = "Not more";
+    operators[">"]  = "More";
+    operators[">="] = "Not less";
     //Equation Operators:
-    tokens["+="] = "Add to";
-    tokens["-="] = "Subtract from";
-    tokens["*="] = "Multiply by";
-    tokens["/="] = "Divide by";
-    tokens["%="] = "Modulo by";
-    tokens[":="] = "Strict assign";
+    operators["+="] = "Add to";
+    operators["-="] = "Subtract from";
+    operators["*="] = "Multiply by";
+    operators["/="] = "Divide by";
+    operators["%="] = "Modulo by";
+    operators[":="] = "Strict assign";
     //Special symbols:
-    tokens[")"]  = "Round opening";
-    tokens[")"]  = "Round closing";
-    tokens["{"]  = "Curly opening";
-    tokens["}"]  = "Curly closing";
-    tokens["["]  = "Square opening";
-    tokens["]"]  = "Square closing";
-    tokens[":"]  = "Colon";
-    tokens[";"]  = "Semicolon";
-    tokens["."]  = "Dot";
-    tokens[","]  = "Comma";
+    operators[")"]  = "Round opening";
+    operators[")"]  = "Round closing";
+    operators["{"]  = "Curly opening";
+    operators["}"]  = "Curly closing";
+    operators["["]  = "Square opening";
+    operators["]"]  = "Square closing";
+    operators[":"]  = "Colon";
+    operators[";"]  = "Semicolon";
+    operators["."]  = "Dot";
+    operators[","]  = "Comma";
 
-    return tokens;
+    return operators;
+}
+/// @brief (0/4) Generates the list of the keywords used in Genesis.
+/// @return The array of the keywords.
+auto generateKeywords(){
+    const string keywords[] = {"if", "else", "as", "for", "while", "break", "return",
+                "class", "do", "private", "protected", "public", "static",  "delete", 
+                "import", "this", "and", "or", "not", "true", "false", "void", "with",
+                "extends", "interface", "export", "readonly", "go", "in", "out"};
+    return keywords;
+}
+
+/// @brief (1/4) Removes the the characters to be ignored (comments) from the source code.
+/// @return The formatted string with only meaningful content.
+list<string> cleanseComments(string source) {
+
 }
 
 
+/// @brief (2/4) Divides the source code into the sequence of sliced lexemes ready to be parsed.
+/// @return The list of individual lexemes.
 list<string> splitIntoComponents(string input) {
     //Splits the input string into the components
-    //that can be parsed as individual tokens.
-    const auto tokens = generateTokens();
-    Block primary = Block(NULL, NULL);
+    //that can be parsed as individual operators.
+    const map<string, string> operators = generateTokens();
+    const string *keywords = generateKeywords();
     //Step 1. Cleanse the comments.
-    //Step 2. Split the input into the meaningful parts.
-    //Step 3. Tokenise the parts.
-    //Step 4. Generate the pattern tree.
 
 }
 
-list<Lexeme> tokenise(string input) {
+/// @brief (3/4) Parses the tokens into specified lexemes by mathing operators, keywords and identifiers.
+/// @return The sequence of configured lexemes.
+list<Lexeme> tokenise(string source) {
     //This function tokenises the source code into a list of lexemes.
-    list<Lexeme> lexemes; //Below is only the reference to the primary tokens.
-    const map<string, string> tokens = generateTokens();
-    
+    list<Lexeme> lexemes; //Below is only the reference to the primary operators.
+    const map<string, string> operators = generateTokens();
+    const string *keywords = generateKeywords();
     return lexemes;
 }
 
+/// @brief (4/4) Parses the lexemes into the hierarchical tree model of the operators.
+/// @return The statement pattern as an integer.
+int parseIntoPattern(list<Lexeme> lexemes) {
+    int pattern{}; //The initial pattern of the code.
+
+    return pattern;
+};
