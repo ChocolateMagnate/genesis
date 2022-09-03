@@ -1,4 +1,4 @@
-private countSessionMembers(id: SessionId) -> int: //The function
+private countSessionMembers(id: SessionId/*, phase*/) -> int: //The function
     """Counts the total amount of users engaging within the meeting."""
     //...
     return count

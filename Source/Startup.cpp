@@ -14,7 +14,7 @@ using namespace std;
 int main(){
     cout << "Genesis Compiler v0.1" << endl;
     string statement;
-    ifstream source("Samples/code.gen");
+    ifstream source("/workspaces/genesis/Samples/code.gen");
     if (source.is_open()){
         cout << "Source code loaded." << endl;
         getline(source, statement);

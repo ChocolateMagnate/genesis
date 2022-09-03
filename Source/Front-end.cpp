@@ -109,24 +109,31 @@ auto generateKeywords(){
 const auto tokens = generateTokens();
 const auto keywords = generateKeywords();
 
-/// @brief (1/4) Removes the the characters to be ignored (comments) from the source code.
+/// @brief (1/4) Removes the the characters to be ignored (comments) from the source code 
+/// and flags if the multiline /* comment was closed.
 /// @return The formatted string with only meaningful content.
-std::string cleanseComments(std::string source) {
-    int indexOfComments = source.find("//");
-    if (indexOfComments != std::string::npos) {
-        source = source.substr(0, indexOfComments);
-        //Removes the rest of the line from the point where comment srarts.
-    } else {
-        indexOfComments = source.find("/*");
-        if (indexOfComments != std::string::npos) {
-            int indexOfCommentsEnd = source.find("*/");
-            if (indexOfCommentsEnd != std::string::npos)
-                source = source.substr(0, indexOfComments) + source.substr(indexOfCommentsEnd + 2);
-        else source = source.substr(0, indexOfCommentsEnd);
-        }
-        
+std::tuple<std::string, bool> cleanseComments(std::string source, bool commentClosed = true) {
+    if (!commentClosed){ //Remove everything before the closing comment.
+        int commentEnd = source.find("*/");
+        if (commentEnd == std::string::npos) {
+            return {"", false};
+        } else source = source.substr(commentEnd, source.length() - commentEnd);
     }
-    return source;
+    int indexOfComments = source.find("//");
+    if (indexOfComments != std::string::npos)
+        source = source.substr(0, indexOfComments); //Remove the rest of the line if // is detected.
+    indexOfComments = source.find("/*");
+    if (indexOfComments != std::string::npos) {
+        //Remove the rest of the line if /* is found unless it's closed with */. 
+        //Otherwise, remove until the end of the line and add unclosed comment flag.
+        int indexOfCommentsEnd = source.find("*/");
+        if (indexOfCommentsEnd != std::string::npos) {
+            source = source.substr(0, indexOfComments) + source.substr(indexOfCommentsEnd + 2);
+            commentClosed = !commentClosed;
+            }
+        else source = source.substr(0, indexOfComments);
+        }
+    return {source, commentClosed};
 }
 
 
