@@ -10,7 +10,7 @@
 unsigned int registers[16]; // The 16 CPU registers
 /// @brief Finds the register that can be used for assignment. 
 /// @return The available register.
-int getAvailableRegister(){
+auto getAvailableRegister(){
     for (auto index = 0; index < 16; index++){
         if (index == 7) continue; //The 7th register is reserved for the system calls.
         if (registers[index] == 0){
@@ -18,6 +18,7 @@ int getAvailableRegister(){
             return index;
         }
     }
+    return -1; //-1 means no register is available.
 }
 /// @brief Moves the value into the register.
 /// @return The Assembly MOV statement.

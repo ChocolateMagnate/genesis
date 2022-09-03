@@ -14,6 +14,7 @@ enum TokenSort{
     Keyword,
     Number,
     String,
+    Boolean,
     Identifier,
     Operator,
     Delimiter,
@@ -27,7 +28,7 @@ typedef struct Lexeme {
 } Lexeme;
 
 
-/// @brief The hierarchical tree model of the operators. 
+/// @brief The hierarchical tree model of the tokens. 
 class Block {
     public:
         Block *parent;
@@ -52,48 +53,48 @@ class Block {
 };
 
 /// @brief Generates the standard lexemes used in the language.
-/// @return The map of standard operators to their codes with the array of the keywords.
+/// @return The map of standard tokens to their codes with the array of the keywords.
 auto generateTokens() {
     //This function tokenises the source code 
     //into a list of predefined lexemes.
-    std::map<std::string, Lexeme> operators;
+    std::map<std::string, Lexeme> tokens;
     //Algebraic Operators:
-    operators["+"]  = {"Add", Operator};
-    operators["-"]  = {"Subtract", Operator};
-    operators["*"]  = {"Multiply", Operator};
-    operators["/"]  = {"Divide", Operator};
-    operators["="]  = {"Assign", Operator};
-    operators["%"]  = {"Modulo", Operator};
-    operators["^"]  = {"Power", Operator};
-    operators["\\"] = {"Root", Operator};
+    tokens["+"]  = {"Add", Operator};
+    tokens["-"]  = {"Subtract", Operator};
+    tokens["*"]  = {"Multiply", Operator};
+    tokens["/"]  = {"Divide", Operator};
+    tokens["="]  = {"Assign", Operator};
+    tokens["%"]  = {"Modulo", Operator};
+    tokens["^"]  = {"Power", Operator};
+    tokens["\\"] = {"Root", Operator};
     //Boolean Operators:
-    operators["=="] = {"Equals", Operator};
-    operators["!" ] = {"Not", Operator};
-    operators["!="] = {"Not equals", Operator};
-    operators["<"]  = {"Less", Operator};
-    operators["<="] = {"Not more", Operator};
-    operators[">"]  = {"More", Operator};
-    operators[">="] = {"Not less", Operator};
+    tokens["=="] = {"Equals", Operator};
+    tokens["!" ] = {"Not", Operator};
+    tokens["!="] = {"Not equals", Operator};
+    tokens["<"]  = {"Less", Operator};
+    tokens["<="] = {"Not more", Operator};
+    tokens[">"]  = {"More", Operator};
+    tokens[">="] = {"Not less", Operator};
     //Equation Operators:
-    operators["+="] = {"Add to", Operator};
-    operators["-="] = {"Subtract from", Operator};
-    operators["*="] = {"Multiply by", Operator};
-    operators["/="] = {"Divide by", Operator};
-    operators["%="] = {"Modulo by", Operator};
-    operators[":="] = {"Strict assign", Operator};
+    tokens["+="] = {"Add to", Operator};
+    tokens["-="] = {"Subtract from", Operator};
+    tokens["*="] = {"Multiply by", Operator};
+    tokens["/="] = {"Divide by", Operator};
+    tokens["%="] = {"Modulo by", Operator};
+    tokens[":="] = {"Strict assign", Operator};
     //Special symbols:
-    operators[")"]  = {"Round opening", Delimiter};
-    operators[")"]  = {"Round closing", Delimiter};
-    operators["{"]  = {"Curly opening", Delimiter};
-    operators["}"]  = {"Curly closing", Delimiter};
-    operators["["]  = {"Square opening", Delimiter};
-    operators["]"]  = {"Square closing", Delimiter};
-    operators[":"]  = {"Colon", Delimiter};
-    operators[";"]  = {"Semicolon", Delimiter};
-    operators["."]  = {"Dot", Delimiter};
-    operators[","]  = {"Comma", Delimiter};
+    tokens[")"]  = {"Round opening", Delimiter};
+    tokens[")"]  = {"Round closing", Delimiter};
+    tokens["{"]  = {"Curly opening", Delimiter};
+    tokens["}"]  = {"Curly closing", Delimiter};
+    tokens["["]  = {"Square opening", Delimiter};
+    tokens["]"]  = {"Square closing", Delimiter};
+    tokens[";"]  = {"Semicolon", Delimiter};
+    tokens[":"]  = {"Colon", Delimiter};
+    tokens[","]  = {"Comma", Delimiter};
+    tokens["."]  = {"Dot", Delimiter};
 
-    return operators;
+    return tokens;
 }
 /// @brief (0/4) Generates the list of the keywords used in Genesis.
 /// @return The array of the keywords.
@@ -102,8 +103,11 @@ auto generateKeywords(){
                 "class", "do", "private", "protected", "public", "static",  "delete", 
                 "import", "this", "and", "or", "not", "true", "false", "void", "with",
                 "extends", "interface", "export", "readonly", "go", "in", "out"};
-    return keywords;
+    return &keywords;
 }
+//Global lexemes:
+const auto tokens = generateTokens();
+const auto keywords = generateKeywords();
 
 /// @brief (1/4) Removes the the characters to be ignored (comments) from the source code.
 /// @return The formatted string with only meaningful content.
@@ -130,22 +134,20 @@ std::string cleanseComments(std::string source) {
 /// @return The list of individual lexemes.
 std::list<std::string> splitIntoComponents(std::string source) {
     //Splits the input string into the components
-    //that can be parsed as individual operators.
-    const std::map<std::string, Lexeme> operators = generateTokens();
-    std::string *keywords = generateKeywords();
+    //that can be parsed as individual tokens.
     
-
+    return std::list<std::string>();
 };
 
-/// @brief (3/4) Parses the tokens into specified lexemes by mathing operators, keywords and identifiers.
+/// @brief (3/4) Parses the tokens into specified lexemes by mathing tokens, keywords and identifiers.
 /// @return The sequence of configured lexemes.
 std::list<Lexeme> tokenise(std::string source) {
     //This function tokenises the source code into a list of lexemes.
-    std::list<Lexeme> lexemes; //Below is only the reference to the primary operators.
+    std::list<Lexeme> lexemes; //Below is only the reference to the primary tokens.
     return lexemes;
 }
 
-/// @brief (4/4) Parses the lexemes into the hierarchical tree model of the operators.
+/// @brief (4/4) Parses the lexemes into the hierarchical tree model of the tokens.
 /// @return The statement pattern as an integer.
 auto parseIntoPattern(std::list<Lexeme> lexemes) {
     int pattern{}; //The initial pattern of the code.
