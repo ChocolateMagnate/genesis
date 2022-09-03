@@ -1,9 +1,9 @@
 /* MIT License (C) Genesis Contributors
  * This file contains the final stage of compilation of the 
  * Genesis source code and produces Artificial Thought Conveyer
- * that can be executed directly by the hardware. It takes the 
- * pre-processed source and harnesses the power of C++ to build
- * the executable. For previous stages, look at Source/Compiler.h*/
+ * that can be executed directly by the hardware. Since it is
+ * written in Assembly, any instruction corrections are welcome.
+ *  For previous stages, look at Source/Front-end.cpp*/
 #include <iostream>
 #include <string>
 
@@ -12,7 +12,7 @@ unsigned int registers[16]; // The 16 CPU registers
 /// @return The available register.
 int getAvailableRegister(){
     for (auto index = 0; index < 16; index++){
-        if (index == 7) continue;
+        if (index == 7) continue; //The 7th register is reserved for the system calls.
         if (registers[index] == 0){
             registers[index] = 1;
             return index;

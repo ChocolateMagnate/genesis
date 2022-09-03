@@ -10,10 +10,20 @@
 #include <list>
 #include <map>
 
+enum TokenSort{
+    Keyword,
+    Number,
+    String,
+    Identifier,
+    Operator,
+    Delimiter,
+    Unknown
+};
+
 /// @brief The basic type that represents the token as its value and type.
 struct Lexeme {
-    std::string lexeme;
-    char type[5];  //The type of lexeme: identifier, number, string, an operator, keyword, etc.
+    std::string content;
+    TokenSort type;  //The type of lexeme: identifier, number, string, an operator, keyword, etc.
 };
 
 
