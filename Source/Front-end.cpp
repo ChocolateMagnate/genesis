@@ -21,10 +21,10 @@ enum TokenSort{
 };
 
 /// @brief The basic type that represents the token as its value and type.
-struct Lexeme {
+typedef struct Lexeme {
     std::string content;
     TokenSort type;  //The type of lexeme: identifier, number, string, an operator, keyword, etc.
-};
+} Lexeme;
 
 
 /// @brief The hierarchical tree model of the operators. 
@@ -44,7 +44,7 @@ class Block {
             for (int i = 0; i < depth; i++) {
                 std::cout << "  ";
             }
-            std::cout << lexeme->lexeme << std::endl;
+            std::cout << lexeme->content << std::endl;
             for (Block *child : children) {
                 child->Show(depth + 1);
             }
@@ -56,42 +56,42 @@ class Block {
 auto generateTokens() {
     //This function tokenises the source code 
     //into a list of predefined lexemes.
-    std::map<std::string, std::string> operators;
+    std::map<std::string, Lexeme> operators;
     //Algebraic Operators:
-    operators["+"]  = "Add";
-    operators["-"]  = "Subtract";
-    operators["*"]  = "Multiply";
-    operators["/"]  = "Divide";
-    operators["="]  = "Assign";
-    operators["%"]  = "Modulo";
-    operators["^"]  = "Power";
-    operators["\\"] = "Root";
+    operators["+"]  = {"Add", Operator};
+    operators["-"]  = {"Subtract", Operator};
+    operators["*"]  = {"Multiply", Operator};
+    operators["/"]  = {"Divide", Operator};
+    operators["="]  = {"Assign", Operator};
+    operators["%"]  = {"Modulo", Operator};
+    operators["^"]  = {"Power", Operator};
+    operators["\\"] = {"Root", Operator};
     //Boolean Operators:
-    operators["=="] = "Equals";
-    operators["!" ] = "Not";
-    operators["!="] = "Not equals";
-    operators["<"]  = "Less";
-    operators["<="] = "Not more";
-    operators[">"]  = "More";
-    operators[">="] = "Not less";
+    operators["=="] = {"Equals", Operator};
+    operators["!" ] = {"Not", Operator};
+    operators["!="] = {"Not equals", Operator};
+    operators["<"]  = {"Less", Operator};
+    operators["<="] = {"Not more", Operator};
+    operators[">"]  = {"More", Operator};
+    operators[">="] = {"Not less", Operator};
     //Equation Operators:
-    operators["+="] = "Add to";
-    operators["-="] = "Subtract from";
-    operators["*="] = "Multiply by";
-    operators["/="] = "Divide by";
-    operators["%="] = "Modulo by";
-    operators[":="] = "Strict assign";
+    operators["+="] = {"Add to", Operator};
+    operators["-="] = {"Subtract from", Operator};
+    operators["*="] = {"Multiply by", Operator};
+    operators["/="] = {"Divide by", Operator};
+    operators["%="] = {"Modulo by", Operator};
+    operators[":="] = {"Strict assign", Operator};
     //Special symbols:
-    operators[")"]  = "Round opening";
-    operators[")"]  = "Round closing";
-    operators["{"]  = "Curly opening";
-    operators["}"]  = "Curly closing";
-    operators["["]  = "Square opening";
-    operators["]"]  = "Square closing";
-    operators[":"]  = "Colon";
-    operators[";"]  = "Semicolon";
-    operators["."]  = "Dot";
-    operators[","]  = "Comma";
+    operators[")"]  = {"Round opening", Delimiter};
+    operators[")"]  = {"Round closing", Delimiter};
+    operators["{"]  = {"Curly opening", Delimiter};
+    operators["}"]  = {"Curly closing", Delimiter};
+    operators["["]  = {"Square opening", Delimiter};
+    operators["]"]  = {"Square closing", Delimiter};
+    operators[":"]  = {"Colon", Delimiter};
+    operators[";"]  = {"Semicolon", Delimiter};
+    operators["."]  = {"Dot", Delimiter};
+    operators[","]  = {"Comma", Delimiter};
 
     return operators;
 }
@@ -111,14 +111,16 @@ std::string cleanseComments(std::string source) {
     int indexOfComments = source.find("//");
     if (indexOfComments != std::string::npos) {
         source = source.substr(0, indexOfComments);
+        //Removes the rest of the line from the point where comment srarts.
     } else {
         indexOfComments = source.find("/*");
         if (indexOfComments != std::string::npos) {
             int indexOfCommentsEnd = source.find("*/");
-            if (indexOfCommentsEnd != std::string::npos) {
+            if (indexOfCommentsEnd != std::string::npos)
                 source = source.substr(0, indexOfComments) + source.substr(indexOfCommentsEnd + 2);
-            } 
+        else source = source.substr(0, indexOfCommentsEnd);
         }
+        
     }
     return source;
 }
@@ -129,7 +131,7 @@ std::string cleanseComments(std::string source) {
 std::list<std::string> splitIntoComponents(std::string source) {
     //Splits the input string into the components
     //that can be parsed as individual operators.
-    const std::map<std::string, std::string> operators = generateTokens();
+    const std::map<std::string, Lexeme> operators = generateTokens();
     std::string *keywords = generateKeywords();
     
 
@@ -140,8 +142,6 @@ std::list<std::string> splitIntoComponents(std::string source) {
 std::list<Lexeme> tokenise(std::string source) {
     //This function tokenises the source code into a list of lexemes.
     std::list<Lexeme> lexemes; //Below is only the reference to the primary operators.
-    const std::map<std::string, std::string> operators = generateTokens();
-    std::string *keywords = generateKeywords();
     return lexemes;
 }
 
