@@ -11,14 +11,7 @@
 #include <map>
 
 enum TokenSort{
-    Keyword,
-    Number,
-    String,
-    Boolean,
-    Identifier,
-    Operator,
-    Delimiter,
-    Unknown
+    Keyword, Number, String, Boolean, Identifier, Operator, Delimiter, Unknown
 };
 
 /// @brief The basic type that represents the token as its value and type.
@@ -113,26 +106,33 @@ const auto keywords = generateKeywords();
 /// and flags if the multiline /* comment was closed.
 /// @return The formatted string with only meaningful content.
 std::tuple<std::string, bool> cleanseComments(std::string source, bool commentClosed = true) {
-    if (!commentClosed){ //Remove everything before the closing comment.
+    //Section 1. Remove everything before the closing comment.
+    if (!commentClosed){
         int commentEnd = source.find("*/");
         if (commentEnd == std::string::npos) {
             return {"", false};
-        } else source = source.substr(commentEnd, source.length() - commentEnd);
+        } else source = source.substr(commentEnd + 2, source.length() - commentEnd);
     }
+    //Section 2. Remove one-line comment.
     int indexOfComments = source.find("//");
     if (indexOfComments != std::string::npos)
         source = source.substr(0, indexOfComments); //Remove the rest of the line if // is detected.
+    //Section 3. Remove multiline comment.
     indexOfComments = source.find("/*");
-    if (indexOfComments != std::string::npos) {
+    bool startFound = indexOfComments != std::string::npos; //string::npos is the end of the string.
+    if (startFound) {
         //Remove the rest of the line if /* is found unless it's closed with */. 
         //Otherwise, remove until the end of the line and add unclosed comment flag.
         int indexOfCommentsEnd = source.find("*/");
-        if (indexOfCommentsEnd != std::string::npos) {
+        bool endFound = indexOfCommentsEnd != std::string::npos;
+        if (endFound) {
             source = source.substr(0, indexOfComments) + source.substr(indexOfCommentsEnd + 2);
             commentClosed = !commentClosed;
-            }
-        else source = source.substr(0, indexOfComments);
+        } else {
+            source = source.substr(0, indexOfComments);
+            commentClosed = false;
         }
+    }
     return {source, commentClosed};
 }
 
