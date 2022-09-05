@@ -9,14 +9,14 @@
 #include <vector>
 #include <list>
 #include <map>
-
+using namespace std;
 enum TokenSort{
     Keyword, Number, String, Boolean, Identifier, Operator, Delimiter, Unknown
 };
 
 /// @brief The basic type that represents the token as its value and type.
 typedef struct Lexeme {
-    std::string content;
+    string content;
     TokenSort type;  //The type of lexeme: identifier, number, string, an operator, keyword, etc.
 } Lexeme;
 
@@ -25,7 +25,7 @@ typedef struct Lexeme {
 class Block {
     public:
         Block *parent;
-        std::list<Block*> children;
+        list<Block*> children;
         Lexeme *lexeme;
         Block(Block *parent, Lexeme *lexeme) {
             this->parent = parent;
@@ -36,9 +36,9 @@ class Block {
         }
         void Show(int depth) {
             for (int i = 0; i < depth; i++) {
-                std::cout << "  ";
+                cout << "  ";
             }
-            std::cout << lexeme->content << std::endl;
+            cout << lexeme->content << endl;
             for (Block *child : children) {
                 child->Show(depth + 1);
             }
@@ -50,7 +50,7 @@ class Block {
 auto generateTokens() {
     //This function tokenises the source code 
     //into a list of predefined lexemes.
-    std::map<std::string, Lexeme> tokens;
+    map<string, Lexeme> tokens;
     //Algebraic Operators:
     tokens["+"]  = {"Add", Operator};
     tokens["-"]  = {"Subtract", Operator};
@@ -92,7 +92,7 @@ auto generateTokens() {
 /// @brief (0/4) Generates the list of the keywords used in Genesis.
 /// @return The array of the keywords.
 auto generateKeywords(){
-    std::string keywords[] = {"if", "else", "as", "for", "while", "break", "return",
+    string keywords[] = {"if", "else", "as", "for", "while", "break", "return",
                 "class", "do", "private", "protected", "public", "static",  "delete", 
                 "import", "this", "and", "or", "not", "true", "false", "void", "with",
                 "extends", "interface", "export", "readonly", "go", "in", "out"};
@@ -105,26 +105,26 @@ const auto keywords = generateKeywords();
 /// @brief (1/4) Removes the the characters to be ignored (comments) from the source code 
 /// and flags if the multiline /* comment was closed.
 /// @return The formatted string with only meaningful content.
-std::tuple<std::string, bool> cleanseComments(std::string source, bool commentClosed = true) {
+tuple<string, bool> cleanseComments(string source, bool commentClosed = true) {
     //Section 1. Remove everything before the closing comment.
     if (!commentClosed){
         int commentEnd = source.find("*/");
-        if (commentEnd == std::string::npos) {
+        if (commentEnd == string::npos) {
             return {"", false};
         } else source = source.substr(commentEnd + 2, source.length() - commentEnd);
     }
     //Section 2. Remove one-line comment.
     int indexOfComments = source.find("//");
-    if (indexOfComments != std::string::npos)
+    if (indexOfComments != string::npos)
         source = source.substr(0, indexOfComments); //Remove the rest of the line if // is detected.
     //Section 3. Remove multiline comment.
     indexOfComments = source.find("/*");
-    bool startFound = indexOfComments != std::string::npos; //string::npos is the end of the string.
+    bool startFound = indexOfComments != string::npos; //string::npos is the end of the string.
     if (startFound) {
         //Remove the rest of the line if /* is found unless it's closed with */. 
         //Otherwise, remove until the end of the line and add unclosed comment flag.
         int indexOfCommentsEnd = source.find("*/");
-        bool endFound = indexOfCommentsEnd != std::string::npos;
+        bool endFound = indexOfCommentsEnd != string::npos;
         if (endFound) {
             source = source.substr(0, indexOfComments) + source.substr(indexOfCommentsEnd + 2);
             commentClosed = !commentClosed;
@@ -132,6 +132,8 @@ std::tuple<std::string, bool> cleanseComments(std::string source, bool commentCl
             source = source.substr(0, indexOfComments);
             commentClosed = false;
         }
+        auto test = source.find("/*");
+        if (test != string::npos) return cleanseComments(source);
     }
     return {source, commentClosed};
 }
@@ -139,24 +141,24 @@ std::tuple<std::string, bool> cleanseComments(std::string source, bool commentCl
 
 /// @brief (2/4) Divides the source code into the sequence of sliced lexemes ready to be parsed.
 /// @return The list of individual lexemes.
-std::list<std::string> splitIntoComponents(std::string source) {
+list<string> splitIntoComponents(string source) {
     //Splits the input string into the components
     //that can be parsed as individual tokens.
     
-    return std::list<std::string>();
+    return list<string>();
 };
 
 /// @brief (3/4) Parses the tokens into specified lexemes by mathing tokens, keywords and identifiers.
 /// @return The sequence of configured lexemes.
-std::list<Lexeme> tokenise(std::string source) {
+list<Lexeme> tokenise(string source) {
     //This function tokenises the source code into a list of lexemes.
-    std::list<Lexeme> lexemes; //Below is only the reference to the primary tokens.
+    list<Lexeme> lexemes; //Below is only the reference to the primary tokens.
     return lexemes;
 }
 
 /// @brief (4/4) Parses the lexemes into the hierarchical tree model of the tokens.
 /// @return The statement pattern as an integer.
-auto parseIntoPattern(std::list<Lexeme> lexemes) {
+auto parseIntoPattern(list<Lexeme> lexemes) {
     int pattern{}; //The initial pattern of the code.
 
     return pattern;
