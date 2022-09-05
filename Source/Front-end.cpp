@@ -9,6 +9,7 @@
 #include <vector>
 #include <list>
 #include <map>
+#include "Exports.cpp"
 using namespace std;
 enum TokenSort{
     Keyword, Number, String, Boolean, Identifier, Operator, Delimiter, Unknown
@@ -20,30 +21,6 @@ typedef struct Lexeme {
     TokenSort type;  //The type of lexeme: identifier, number, string, an operator, keyword, etc.
 } Lexeme;
 
-
-/// @brief The hierarchical tree model of the tokens. 
-class Block {
-    public:
-        Block *parent;
-        list<Block*> children;
-        Lexeme *lexeme;
-        Block(Block *parent, Lexeme *lexeme) {
-            this->parent = parent;
-            this->lexeme = lexeme;
-        }
-        void addChild(Block *child) {
-            children.push_back(child);
-        }
-        void Show(int depth) {
-            for (int i = 0; i < depth; i++) {
-                cout << "  ";
-            }
-            cout << lexeme->content << endl;
-            for (Block *child : children) {
-                child->Show(depth + 1);
-            }
-        }
-};
 
 /// @brief Generates the standard lexemes used in the language.
 /// @return The map of standard tokens to their codes with the array of the keywords.
@@ -138,21 +115,21 @@ tuple<string, bool> cleanseComments(string source, bool commentClosed = true) {
     return {source, commentClosed};
 }
 
-
 /// @brief (2/4) Divides the source code into the sequence of sliced lexemes ready to be parsed.
 /// @return The list of individual lexemes.
 list<string> splitIntoComponents(string source) {
     //Splits the input string into the components
     //that can be parsed as individual tokens.
-    
-    return list<string>();
+    list<string> components;
+    int quotation = source.find('"'); //To pass a quotation mark in a string, use single ticks.
+    if (quotation != string::npos) 
+    return components;
 };
 
-/// @brief (3/4) Parses the tokens into specified lexemes by mathing tokens, keywords and identifiers.
+/// @brief (3/4) Parses the tokens into specified lexemes by matching tokens, keywords and identifiers.
 /// @return The sequence of configured lexemes.
 list<Lexeme> tokenise(string source) {
-    //This function tokenises the source code into a list of lexemes.
-    list<Lexeme> lexemes; //Below is only the reference to the primary tokens.
+    list<Lexeme> lexemes;
     return lexemes;
 }
 
