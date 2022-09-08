@@ -1,4 +1,4 @@
-/*MIT License (C) Genesis Contributors
+/* MIT License (C) Genesis Contributors
  * This file contains different data structures
  * used in the compilation process, which includes
  * Tree and SourceSchema. You are free to use, modify,
