@@ -122,7 +122,9 @@ list<string> splitIntoComponents(string source) {
     //that can be parsed as individual tokens.
     list<string> components;
     int quotation = source.find('"'); //To pass a quotation mark in a string, use single ticks.
-    if (quotation != string::npos) 
+    if (quotation != string::npos){
+        
+    }
     return components;
 };
 

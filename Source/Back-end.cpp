@@ -54,7 +54,7 @@ std::string sub(std::string value1, std::string value2){
     std::string result = "SUB " + registerName + ", #" + value1 + ", #" + value2;
     return result;
 }
-/// @brief Multipllies two values and stores the result in the register.
+/// @brief Multiplies two values and stores the result in the register.
 /// @return The Assembly MUL statement.
 std::string multiply(std::string value1, std::string value2){
     int registerIndex = getAvailableRegister();
@@ -96,13 +96,13 @@ std::string shiftLeft(std::string value){
     std::string result = "SHL " + registerName + ", #" + value;
     return result;
 }
-/// @brief Moves the execution flow to the speicified label.
+/// @brief Moves the execution flow to the specified label.
 /// @return The Assembly JMP statement.
 std::string jump(std::string label){
     return "JMP " + label;
 }
-/// @brief Evaluates the condition by substracting the first value from the second and 
-/// saves the reuslt in the register.
+/// @brief Evaluates the condition by subtracting the first value from the second and 
+/// saves the result in the register.
 /// @return The Assembly CMP statement.
 std::string compare(int register1, int register2){
     int registerIndex = getAvailableRegister();
