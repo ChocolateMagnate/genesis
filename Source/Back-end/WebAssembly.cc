@@ -1,0 +1,15 @@
+/* Mit Licence (C) Genesis Contributors
+ * This file contains the translation techniques used to
+ * convert Genesis intermediate representation into 
+ * executable WASM code that can run directly in browser.*/
+#include <iostream>
+#include <string>
+
+/* WebAssemble (short WA or WASM) is the recent technology
+ * that attempts to move computationally heavy operations
+ * to more productive and performant programming languages
+ * like C, C++, Rust, Go or C# within browsers. This allows
+ * clients run code in those languages in a virtual machine
+ * and yield much greater performance without the need of
+ * servers. It is primarily used in browser games, graphically
+ * intensive tasks and quickly grows into a tech stack.*/
