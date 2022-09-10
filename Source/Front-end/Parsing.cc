@@ -9,7 +9,7 @@
 #include <vector>
 #include <list>
 #include <map>
-#include "Exports.cpp"
+#include "Exports.cc"
 using namespace std;
 enum TokenSort{
     Keyword, Number, String, Boolean, Identifier, Operator, Delimiter, Unknown

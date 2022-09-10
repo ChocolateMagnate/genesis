@@ -1,15 +1,20 @@
 /* MIT License (C) Genesis Contributors
- * This file contains the final stage of compilation of the 
- * Genesis source code and produces Artificial Thought Conveyer
- * that can be executed directly by the hardware. Since it is
- * written in Assembly, any instruction corrections are welcome.
- * For previous stages, look at Source/Front-end.cpp*/
+ * This file is responsible for end-compiling and
+ * linking executables from Genesis Mediator Assembly 
+ * into ARM-native processor instructions. */
 #include <iostream>
 #include <string>
 using namespace std;
-//       HELPFUL UTILITIES
-unsigned int registers[16]; // The 16 CPU registers
-unsigned int unavailableRegisters[16]; // The records of the taken registers.
+/* ARM is minimalistic register-based processor architecture
+ * that utilises reduced instruction set computer (RISC) to
+ * represent a verity of tasks. It's remarkably more performant
+ * than Intel processors due to their lack of unnecessary instructions
+ * and improving the pathways, while needing less energy and producing
+ * significantly less heat. It is commonly used in mobile devices,
+ * Internet of Things and wearables.*/
+unsigned int registers       [16];   // The 16 universal CPU registers
+bool unavailableRegisters    [16];  // The records of the taken registers
+unsigned int specialRegisters[16]; // The 16 system-reserved registers
 /// @brief Finds the register that can be used for assignment. 
 /// @return The available register.
 auto getAvailableRegister(){

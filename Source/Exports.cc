@@ -1,8 +1,6 @@
 /* MIT License (C) Genesis Contributors
- * This file contains different data structures
- * used in the compilation process, which includes
- * Tree and SourceSchema. You are free to use, modify,
- * study them and contribute improvements through pull requests.*/
+ * This file contains different useful data structures,
+ * algorithms and utilities used in the compilation process.*/
 #include <iostream>
 #include <vector>
 #include <list>

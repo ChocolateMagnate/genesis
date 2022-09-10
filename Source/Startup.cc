@@ -1,14 +1,16 @@
 /* MIT License (C) Genesis Contributors
  * This file is the central roadmap for the whole compiler that 
  * binds all components together. For more detailed description 
- * take a look at Source/Front-end.cpp. For the compiler implementation,
- * see Source/Genesis.cpp for the inner language's features parsing.*/
+ * of the project itself, take a look at README file.*/
 #include <iostream>
 #include <fstream>
 #include <string>
-#include "Back-end.cpp"
-#include "Front-end.cpp"
-#include "Genesis.cpp"
+#include "Front-end/Genesis.cc"
+#include "Front-end/Parsing.cc"
+#include "Middle-end/Medium.cc"
+#include "Middle-end/Optimisations.cc"
+#include "Back-end/ARM.cc"
+#include "Back-end/x64.cc"
 using namespace std;
 
 int main(){
