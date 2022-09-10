@@ -9,8 +9,7 @@
 #include "Front-end/Parsing.cc"
 #include "Middle-end/Medium.cc"
 #include "Middle-end/Optimisations.cc"
-#include "Back-end/ARM.cc"
-#include "Back-end/x64.cc"
+#include "Back-end/Platforms.hpp"
 using namespace std;
 
 int main(){
