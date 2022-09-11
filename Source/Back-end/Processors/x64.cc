@@ -8,7 +8,7 @@
 #include "./Exports.cc"
 using namespace std;
 namespace Compiler::Processor::x64 {
-    /* x64 is a 64-bit stack-based processor architecture 
+   /* x64 is a 64-bit stack-based processor architecture 
     * that uses complex instruction set computing (CISC)
     * to enable wider, easier and more robust compilation.
     * Complex commands take multiple CPU cycles to execute,
@@ -24,9 +24,9 @@ namespace Compiler::Processor::x64 {
 
     // Data movement
 
-    MachineCode mov(int registerIndex, unsigned int value, MachineCode* print = nullptr){
+    void mov(int registerIndex, unsigned int value){
         auto instruction =  "MOV R" + to_string(registerIndex) + ", " + to_string(value);
-        return MachineCode(ARMWindows);
+        
     }
 
     string push(){}

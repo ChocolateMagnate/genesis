@@ -12,63 +12,6 @@
 #include "./Exports.cc"
 using namespace std;
 namespace Compiler::Analysis::Lexer {
-    /// @brief Generates the standard lexemes used in the language.
-    /// @return The map of standard tokens to their codes with the array of the keywords.
-    auto generateTokens() {
-        //This function tokenises the source code 
-        //into a list of predefined lexemes.
-        map<string, Lexeme> tokens;
-        //Algebraic Operators:
-        tokens["+"]  = {"Add", Operator};
-        tokens["-"]  = {"Subtract", Operator};
-        tokens["*"]  = {"Multiply", Operator};
-        tokens["/"]  = {"Divide", Operator};
-        tokens["="]  = {"Assign", Operator};
-        tokens["%"]  = {"Modulo", Operator};
-        tokens["^"]  = {"Power", Operator};
-        tokens["\\"] = {"Root", Operator};
-        //Boolean Operators:
-        tokens["=="] = {"Equals", Operator};
-        tokens["!" ] = {"Not", Operator};
-        tokens["!="] = {"Not equals", Operator};
-        tokens["<"]  = {"Less", Operator};
-        tokens["<="] = {"Not more", Operator};
-        tokens[">"]  = {"More", Operator};
-        tokens[">="] = {"Not less", Operator};
-        //Equation Operators:
-        tokens["+="] = {"Add to", Operator};
-        tokens["-="] = {"Subtract from", Operator};
-        tokens["*="] = {"Multiply by", Operator};
-        tokens["/="] = {"Divide by", Operator};
-        tokens["%="] = {"Modulo by", Operator};
-        tokens[":="] = {"Strict assign", Operator};
-        //Special symbols:
-        tokens[")"]  = {"Round opening", Separator};
-        tokens[")"]  = {"Round closing", Separator};
-        tokens["{"]  = {"Curly opening", Separator};
-        tokens["}"]  = {"Curly closing", Separator};
-        tokens["["]  = {"Square opening", Separator};
-        tokens["]"]  = {"Square closing", Separator};
-        tokens[";"]  = {"Semicolon", Separator};
-        tokens[":"]  = {"Colon", Separator};
-        tokens[","]  = {"Comma", Separator};
-        tokens["."]  = {"Dot", Separator};
-
-        return tokens;
-    }
-    /// @brief (0/3) Generates the list of the keywords used in Genesis.
-    /// @return The array of the keywords.
-    auto generateKeywords(){
-        string keywords[] = {"if", "else", "as", "for", "while", "break", "return",
-                    "class", "do", "private", "protected", "public", "static",  "delete", 
-                    "import", "this", "and", "or", "not", "true", "false", "void", "with",
-                    "extends", "interface", "export", "readonly", "go", "in", "out"};
-        return &keywords;
-    }
-    //Global lexemes:
-    const auto tokens = generateTokens();
-    const auto keywords = generateKeywords();
-
     /// @brief (1/3) Removes the the characters to be ignored (comments) from the source code 
     /// and flags if the multiline /* comment was closed.
     /// @return The formatted string with only meaningful content.
@@ -177,19 +120,19 @@ namespace Compiler::Analysis::Lexer {
                 case str2int("and"): case str2int("or"): case str2int("not"): case str2int("true"): case str2int("false"):
                 case str2int("void"): case str2int("with"): case str2int("extends"): case str2int("interface"):
                 case str2int("export"): case str2int("readonly"): case str2int("go"): case str2int("in"): case str2int("out"):
-                    lexemes.push_back({component, Keyword});
+                    lexemes.push_back(Lexeme(component, Keyword));
                     break;
                 case str2int("+"): case str2int("-"): case str2int("*"): case str2int("/"): case str2int("="):
                 case str2int("%"): case str2int("^"): case str2int("\\"): case str2int("!"): case str2int("?"):
                 case str2int("<"): case str2int(">"): case str2int("&"): case str2int("|"): 
-                    lexemes.push_back({component, Operator});
+                    lexemes.push_back(Lexeme(component, Operator));
                     break;
                 case str2int("("): case str2int(")"): case str2int("{"): case str2int("}"): case str2int("["):
                 case str2int("]"): case str2int(";"): case str2int(":"): case str2int(","): case str2int("."):
-                    lexemes.push_back({component, Separator});
+                    lexemes.push_back(Lexeme(component, Separator));
                     break;
                 case str2int("\t"):
-                    lexemes.push_back({component, Indentation});
+                    lexemes.push_back(Lexeme(component, Indentation));
                     break;
                 default: //The identifier case
                     //Look if the identifier was recognised before.
@@ -201,15 +144,15 @@ namespace Compiler::Analysis::Lexer {
                         switch (flags[count]){
                             case Class:
                                 identifiers.insert({component, Class});
-                                lexemes.push_back({component, Class});
+                                lexemes.push_back(Lexeme(component, Class));
                                 break;
                             case Enum:
                                 identifiers.insert({component, Enum});
-                                lexemes.push_back({component, Enum});
+                                lexemes.push_back(Lexeme(component, Enum));
                                 break;
                             case Interface:
                                 identifiers.insert({component, Interface});
-                                lexemes.push_back({component, Interface});
+                                lexemes.push_back(Lexeme(component, Interface));
                                 break;
                             default:
                                 cout << "Unknown identitier: " << component;

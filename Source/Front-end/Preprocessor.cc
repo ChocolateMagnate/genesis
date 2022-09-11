@@ -7,6 +7,4 @@
 #include <iostream>
 #include <fstream>
 
-namespace Compiler::Analysis::Preprocessor {
-
-};
+namespace Compiler::Analysis::Preprocessor {};

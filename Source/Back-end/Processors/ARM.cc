@@ -6,8 +6,8 @@
 #include <string>
 using namespace std;
 namespace Compiler::Processor::ARM {
-    /* ARM is minimalistic register-based processor architecture
-    * that utilises reduced instruction set computer (RISC) to
+   /* ARM is minimalistic register-based processor architecture
+    * that utilises reduced instruction set computing (RISC) to
     * represent a verity of tasks. It's remarkably more performant
     * than Intel processors due to their lack of unnecessary instructions
     * and improving the pathways, while needing less energy and producing
