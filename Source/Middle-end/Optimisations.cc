@@ -5,3 +5,4 @@
  * optimised, it's completely ready to be natively compiled.*/
 #include <iostream>
 #include <string>
+namespace Compiler::Halfway::Optimisations {};

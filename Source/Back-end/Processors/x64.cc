@@ -7,36 +7,38 @@
 #include <string>
 #include "./Exports.cc"
 using namespace std;
-/* x64 is a 64-bit stack-based processor architecture 
- * that uses complex instruction set computing (CISC)
- * to enable wider, easier and more robust compilation.
- * Complex commands take multiple CPU cycles to execute,
- * which removes some freedom from compiler designer 
- * compared to ARM. It's widely used in supercomputers and PCs.*/
+namespace Compiler::Processor::x64 {
+    /* x64 is a 64-bit stack-based processor architecture 
+    * that uses complex instruction set computing (CISC)
+    * to enable wider, easier and more robust compilation.
+    * Complex commands take multiple CPU cycles to execute,
+    * which removes some freedom from compiler designer 
+    * compared to ARM. It's widely used in supercomputers and PCs.*/
 
-unsigned int generalRegisters[15];   //For the designing purposes,
-unsigned int indexRegisters  [4] ;  //the registers are described as arrays
-unsigned int instructionPointer  ; //instead of maps of their names.
-unsigned int segmentRegisters[4] ;
-unsigned int flag;
-string adjustAfterAddition(){}
+    unsigned int generalRegisters[15];   //For the designing purposes,
+    unsigned int indexRegisters  [4] ;  //the registers are described as arrays
+    unsigned int instructionPointer  ; //instead of maps of their names.
+    unsigned int segmentRegisters[4] ;
+    unsigned int flag;
+    string adjustAfterAddition(){}
 
-// Data movement
+    // Data movement
 
-MachineCode mov(int registerIndex, unsigned int value, MachineCode* print = nullptr){
-    auto instruction =  "MOV R" + to_string(registerIndex) + ", " + to_string(value);
-    return MachineCode(ARMWindows);
-}
+    MachineCode mov(int registerIndex, unsigned int value, MachineCode* print = nullptr){
+        auto instruction =  "MOV R" + to_string(registerIndex) + ", " + to_string(value);
+        return MachineCode(ARMWindows);
+    }
 
-string push(){}
+    string push(){}
 
-string pop(){}
-// Arithmetic operations
+    string pop(){}
+    // Arithmetic operations
 
-// Comparison
+    // Comparison
 
-// Conditional set
+    // Conditional set
 
-// Conditional movement
+    // Conditional movement
 
-// Procedure calls
+    // Procedure calls
+    };

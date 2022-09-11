@@ -6,3 +6,6 @@
  * into a specific processor instruction set. Inspired by LLVM.*/
 #include <iostream>
 #include <string>
+namespace Compiler::Halfway::Medium {
+
+};

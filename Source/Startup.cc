@@ -10,16 +10,17 @@
 #include "Middle-end/Optimisations.cc"
 //#include "Back-end/Platforms.hpp"
 using namespace std;
+namespace Compiler::CommandLineInterface {
+    /// @brief Binds all compilation stages and produces Genesis executable out of the source code.
+    void compile(string input, string output){}
 
-/// @brief Binds all compilation stages and produces Genesis executable out of the source code.
-void compile(string input, string output){}
-
-int main(string args[]){
-    cout << "Genesis Compiler v0.0.1 (C) Genesis Contributors" << endl;
-    if (args->length() == 1){
+    int main(string args[]){
+        cout << "Genesis Compiler v0.0.1 (C) Genesis Contributors" << endl;
+        if (args->length() == 1){
+            cout << "Usage: genesis <input> <output>" << endl;
+            return 0;
+        }
         cout << "Usage: genesis <input> <output>" << endl;
         return 0;
     }
-    cout << "Usage: genesis <input> <output>" << endl;
-    return 0;
-}
+};

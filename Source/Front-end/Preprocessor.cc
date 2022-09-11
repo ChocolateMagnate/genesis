@@ -6,3 +6,7 @@
  * them before they were defined. */
 #include <iostream>
 #include <fstream>
+
+namespace Compiler::Analysis::Preprocessor {
+
+};
