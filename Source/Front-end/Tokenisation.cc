@@ -11,17 +11,6 @@
 #include <map>
 #include "./Exports.cc"
 using namespace std;
-enum TokenSort{
-    Keyword, Number, String, Boolean, Identifier, Operator, Separator, Indentation, Unknown
-};
-
-
-/// @brief The basic type that represents the lexeme as its value and type.
-typedef struct Lexeme {
-    string content;
-    TokenSort type;  //The type of lexeme: identifier, number, string, an operator, keyword, etc.
-} Lexeme;
-
 
 /// @brief Generates the standard lexemes used in the language.
 /// @return The map of standard tokens to their codes with the array of the keywords.
@@ -67,7 +56,7 @@ auto generateTokens() {
 
     return tokens;
 }
-/// @brief (0/4) Generates the list of the keywords used in Genesis.
+/// @brief (0/3) Generates the list of the keywords used in Genesis.
 /// @return The array of the keywords.
 auto generateKeywords(){
     string keywords[] = {"if", "else", "as", "for", "while", "break", "return",
@@ -80,7 +69,7 @@ auto generateKeywords(){
 const auto tokens = generateTokens();
 const auto keywords = generateKeywords();
 
-/// @brief (1/4) Removes the the characters to be ignored (comments) from the source code 
+/// @brief (1/3) Removes the the characters to be ignored (comments) from the source code 
 /// and flags if the multiline /* comment was closed.
 /// @return The formatted string with only meaningful content.
 tuple<string, bool> cleanseComments(string source, bool commentClosed = true) {
@@ -116,7 +105,7 @@ tuple<string, bool> cleanseComments(string source, bool commentClosed = true) {
     return {source, commentClosed};
 }
 
-/// @brief (2/4) Divides the source code into the sequence of sliced lexemes ready to be parsed.
+/// @brief (2/3) Divides the source code into the sequence of sliced lexemes ready to be parsed.
 /// @return The list of individual lexemes.
 list<string> splitIntoComponents(string source) {
     //The order of priorities: strings, indentations, whitespaces.
@@ -168,12 +157,13 @@ list<string> splitIntoComponents(string source) {
     return components;
 };
 
-/// @brief (3/4) Parses the tokens into specified lexemes by matching tokens, keywords and identifiers.
+/// @brief (3/3) Parses the tokens into specified lexemes by matching tokens, keywords and identifiers.
 /// @param components The list of individual lexemes as strings to be parsed.
 /// @param flags The sequence of flags to parse the type of identifiers: class, enum, etc.
 /// @return The sequence of configured lexemes.
-list<Lexeme> tokenise(list<string> components, list<TokenSort> flags) {
-    list<Lexeme> lexemes;
+vector<Lexeme> tokenise(list<string> components, vector<TokenSort> flags) {
+    int count = 0; //The position of the flag to use next.
+    vector<Lexeme> lexemes;
     map<string, TokenSort> identifiers;
     //C++ treat text literals as const char*, therefore we cannot switch them with
     //std::string. In order to compare them, we need to convert string to const char*
@@ -201,23 +191,36 @@ list<Lexeme> tokenise(list<string> components, list<TokenSort> flags) {
             case str2int("\t"):
                 lexemes.push_back({component, Indentation});
                 break;
-            default:
+            default: //The identifier case
+                //Look if the identifier was recognised before.
                 auto indexOfId = find(identifiers.begin(), identifiers.end(), component);
                 if (indexOfId != identifiers.end())
                     lexemes.push_back({component, identifiers["component"]});
+                //If not, verify if it is a valid id from the flags.
                 else {
-
+                    switch (flags[count]){
+                        case Class:
+                            identifiers.insert({component, Class});
+                            lexemes.push_back({component, Class});
+                            break;
+                        case Enum:
+                            identifiers.insert({component, Enum});
+                            lexemes.push_back({component, Enum});
+                            break;
+                        case Interface:
+                            identifiers.insert({component, Interface});
+                            lexemes.push_back({component, Interface});
+                            break;
+                        default:
+                            cout << "Unknown identitier: " << component;
+                            throw "Error: Unknown identifier.";
+                            break;
+                    }
+                    count++;
                 }
-                break;
+            break;
         }
     }
     return lexemes;
 }
 
-/// @brief (4/4) Parses the lexemes into the hierarchical tree model of the tokens.
-/// @return The statement pattern as an integer.
-auto parseIntoPattern(list<Lexeme> lexemes) {
-    int pattern{}; //The initial pattern of the code.
-
-    return pattern;
-};

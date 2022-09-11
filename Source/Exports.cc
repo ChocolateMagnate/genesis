@@ -10,6 +10,19 @@ using namespace std;
 constexpr unsigned int str2int(const char* str, int h = 0) {
     return !str[h] ? 5381 : (str2int(str, h+1)*33) ^ str[h];
 }
+enum TokenSort{
+    Keyword, Number, String, Boolean, Identifier, Operator, Separator, Indentation, Unknown,
+    Class, Function, Variable, Constant, Method, Property, Enum, Interface, Namespace
+};
+
+
+/// @brief The basic type that represents the lexeme as its value and type.
+typedef struct Lexeme {
+    string content;
+    TokenSort type;  //The type of lexeme: identifier, number, string, an operator, keyword, etc.
+} Lexeme;
+
+
 
 /// @brief The basic type that represents the lexeme as its value and type.
 enum PlatformSpecifier{
